@@ -57,7 +57,8 @@ var insertProperty = function (string, propName, propValue) {
   var propToReplace = "{{" + propName + "}}";
   string = string
     .replace(new RegExp(propToReplace, "g"), propValue);
-    return string;
+    console.log("From insertp ",string );
+  return string;
 }
 
 // Remove the class 'active' from home and switch to Menu button
@@ -83,7 +84,7 @@ showLoading("#main-content");
 $ajaxUtils.sendGetRequest(
   homeHtml,
   function (responseText) { 
-    if ( sessionStorage.cat === undefined  ) {
+    if ( sessionStorage.cat === undefined ) {
           $.ajax({
         url: allCategoriesUrl,
         type: 'GET',
@@ -105,21 +106,21 @@ $ajaxUtils.sendGetRequest(
          console.log(JSON.stringify(spvalue));
           sessionStorage.setItem('cat',JSON.stringify(spvalue));
    }
-
-      spvalue=JSON.parse(sessionStorage.getItem('cat'));
-         sp1=spvalue[0];
+      console.log(JSON.parse(sessionStorage.getItem('cat')));
+       spvalue=JSON.parse(sessionStorage.getItem('cat'));
+        console.log(spvalue);
+        sp1=spvalue[0];
         spvalue.shift();
      sessionStorage.setItem('cat',JSON.stringify(spvalue));
          var short_n="'"+sp1+"'";
-           if (spvalue.length === 0 ) {
-      sessionStorage.removeItem('cat');
-       }   
+              
  var ihtml=insertProperty(responseText,"randomCategoryShortName",short_n); 
       console.log("Ihmtl value", ihtml);
      document.querySelector("#main-content")
       .innerHTML = ihtml;
-     },
-       false); 
+
+       },
+    false); 
    });
 
 // Load the menu categories view
